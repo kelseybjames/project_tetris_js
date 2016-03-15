@@ -25,6 +25,11 @@ var model = {
   },
 
   update: function() {
+    if ( !model.blockFalling ) {
+      model.generateBlock(0,5);
+      model.blockFalling = true;
+    }
+
     for(var i = 0; i < this.boardHeight; i++) {
       for(var j = 0; j < this.boardWidth; j++) {
         if (model.board[i][j]) {
@@ -32,9 +37,12 @@ var model = {
           if (( i < this.currentLevel(j) - 1) && (!(model.board[i+1][j])))  {
             this.fallingBlock = [i, j];
           } else if (i === this.currentLevel(j) - 1) {
-            console.log('i have hit bottom at ' + this.currentLevel(j));
-            model.blockFalling = false;
-            model.generateBlock(0,5);
+            // console.log('i have hit bottom at ' + this.currentLevel(j));
+            console.log(this.currentBlock);
+            console.log(this.board[i][j]);
+            if (model.board[i][j] === model.currentBlock) {
+              model.blockFalling = false;
+            }
           }
         }
       }
@@ -57,7 +65,6 @@ var model = {
     var newBlock = new this.Block();
     this.currentBlock = newBlock;
     this.board[y][x] = newBlock;
-    this.blockFalling = true;
   }
 
 }
