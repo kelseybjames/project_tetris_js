@@ -9,11 +9,9 @@ var view = {
 
   drawBlock: function(block) {
     var blockXStart = block.x * 20;
-    var blockXEnd = blockXStart + 20;
-    var blockYStart = ((model.boardHeight - block.y) * 20);
-    var blockYEnd = blockYStart + 20;
+    var blockYStart = block.y * 20;
     this.context.fillStyle = '#FF0000';
-    this.context.fillRect(blockXStart, blockYStart, blockXEnd, blockYEnd);
+    this.context.fillRect(blockXStart, blockYStart, 20, 20);
   },
 
   drawBlocks: function(blockList) {
@@ -28,6 +26,7 @@ var view = {
   },
 
   update: function(blockList) {
+    this.context.clearRect(0, 0, model.boardWidth * 20, model.boardHeight * 20);
     this.drawBlocks(blockList);
   },
 }
