@@ -10,20 +10,20 @@ var model = {
   },
 
   init: function() {
-    generateBlock();
-    for(i=0; i < boardHeight; i++) {
-      this.board.push(Array(boardWidth));
+    for(i=0; i < this.boardHeight; i++) {
+      this.board.push(Array(this.boardWidth));
     };
+    this.generateBlock();
   },
 
   update: function() {
-    blockList.forEach(function(block) {
+    this.blockList.forEach(function(block) {
       block.y--;
     })
   },
 
   generateBlock: function() {
-    newBlock = new Block();
+    var newBlock = new this.Block();
     this.blockList.push(newBlock);
   }
 
