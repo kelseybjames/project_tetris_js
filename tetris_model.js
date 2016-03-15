@@ -1,20 +1,18 @@
 var model = {
-  blockList: [],
+  // blockList: [],
   boardHeight: 20,
   boardWidth: 10,
   board: [],
   fallingBlocks: [],
 
   Block: function() {
-    this.x = 5;
-    this.y = 0;
   },
 
   init: function() {
     for(i=0; i < this.boardHeight; i++) {
       this.board.push(Array(this.boardWidth));
     };
-    this.generateBlock();
+    this.generateBlock(0,5);
   },
 
   update: function() {
@@ -22,35 +20,31 @@ var model = {
       for(var j = 0; j < this.boardWidth; j++) {
         if (model.board[i][j]) {
           block = model.board[i][j];
-          if ((block.y !== this.boardHeight - 1) && (!(model.board[i+1][j])))  {
+          if (( i < this.boardHeight - 1) && (!(model.board[i+1][j])))  {
             this.fallingBlocks.push([i, j]);
           } else {
-            console.log(this.currentBlock.y);
-            this.generateBlock();
+            this.generateBlock(0,5);
           }
         }
       }
     };
 
-    this.fallingBlocks.forEach(function(coords) {
+    while ( this.fallingBlocks.length > 0 ) {
+      var coords = this.fallingBlocks.pop();
       var i = coords[0];
       var j = coords[1];
       console.log(model.board[i][j]);
 
       model.board[i+1][j] = model.board[i][j];
       model.board[i][j] = undefined;
-      block.y++;
-    })
-
-    this.fallingBlocks = [];
+    }
 
   },
 
-  generateBlock: function() {
+  generateBlock: function(x,y) {
     var newBlock = new this.Block();
     this.currentBlock = newBlock;
-    this.blockList.push(newBlock);
-    this.board[newBlock.y][newBlock.x] = newBlock;
+    this.board[y][x] = newBlock;
   }
 
 }
