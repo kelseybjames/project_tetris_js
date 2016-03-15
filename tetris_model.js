@@ -36,6 +36,7 @@ var model = {
 
         if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY + 1][boardX] === 1 ) {
           this.stopBlock();
+          this.generateBlock(0, 3);
           return true;
         }
       }
@@ -72,6 +73,32 @@ var model = {
     this.top = y;
     this.left = x;
   },
+
+  moveBlockLeft: function() {
+    for(var i = 0; i < 4; i++) {
+      for(var j = 0; j < 4; j++) {
+        var boardX = this.currentBlock.left + j;
+        var boardY = this.currentBlock.top + i;
+
+        if ( this.currentBlock.grid[i][j] !== 1 || this.board[boardY][boardX - 1] !== 1 ) {
+        };
+      }
+    }
+    this.currentBlock.left--;   
+  },
+
+  moveBlockRight: function() {
+    for(var i = 0; i < 4; i++) {
+      for(var j = 0; j < 4; j++) {
+        var boardX = this.currentBlock.left + j;
+        var boardY = this.currentBlock.top + i;
+
+        if ( this.currentBlock.grid[i][j] !== 1 || this.board[boardY][boardX + 1] !== 1 ) {
+        };
+      }
+    }
+    this.currentBlock.left++;
+  }
 
 }
 //

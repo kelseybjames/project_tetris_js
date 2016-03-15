@@ -5,6 +5,7 @@ var view = {
     $('.game-board').append(myCanvas);
     this.canvas = $('#tetris-canvas');
     this.context = this.canvas[0].getContext('2d');
+    this.moveListener();
   },
 
   drawBlock: function(i, j) {
@@ -38,4 +39,22 @@ var view = {
     this.context.clearRect(0, 0, model.boardWidth * 20, model.boardHeight * 20);
     this.drawBlocks(board, block);
   },
+
+  moveListener: function() {
+    $(window).on('keydown', function() {
+      switch (event.which) {
+        case 37:
+          console.log('left');
+          model.moveBlockLeft();
+          break;
+        case 39:
+          console.log('right');
+          model.moveBlockRight();
+          break;
+        default:
+          console.log(event.which);
+          break;
+      }
+    })
+  }
 }
