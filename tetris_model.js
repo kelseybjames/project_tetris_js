@@ -3,9 +3,18 @@ var model = {
   boardHeight: 20,
   boardWidth: 10,
   board: [],
-  fallingBlocks: [],
+  fallingBlock: undefined,
+  blockFalling: false,
 
   Block: function() {
+  },
+
+  currentLevel: function(column) {
+    row = this.boardHeight - 1;
+    while (this.board[row][column]) {
+      row--;
+    }
+    return row;
   },
 
   init: function() {
@@ -20,24 +29,27 @@ var model = {
       for(var j = 0; j < this.boardWidth; j++) {
         if (model.board[i][j]) {
           block = model.board[i][j];
-          if (( i < this.boardHeight - 1) && (!(model.board[i+1][j])))  {
-            this.fallingBlocks.push([i, j]);
-          } else {
-            this.generateBlock(0,5);
+          if (( i < this.currentLevel(j) - 1) && (!(model.board[i+1][j])))  {
+            this.fallingBlock = [i, j];
+          } else if (i === this.currentLevel(j) - 1) {
+            console.log('i have hit bottom at ' + this.currentLevel(j));
+            model.blockFalling = false;
+            model.generateBlock(0,5);
           }
         }
       }
     };
 
-    while ( this.fallingBlocks.length > 0 ) {
-      var coords = this.fallingBlocks.pop();
+    while ( this.fallingBlock ) {
+      var coords = this.fallingBlock;
       var i = coords[0];
       var j = coords[1];
       console.log(model.board[i][j]);
 
       model.board[i+1][j] = model.board[i][j];
       model.board[i][j] = undefined;
-    }
+      this.fallingBlock = undefined;
+    };
 
   },
 
@@ -45,6 +57,7 @@ var model = {
     var newBlock = new this.Block();
     this.currentBlock = newBlock;
     this.board[y][x] = newBlock;
+    this.blockFalling = true;
   }
 
 }
