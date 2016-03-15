@@ -6,7 +6,7 @@ var controller = {
 
   update: function() {
     model.update();
-    view.update( model.board );
+    view.update( model.board, model.currentBlock );
   }
 }
 

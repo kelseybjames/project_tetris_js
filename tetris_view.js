@@ -14,18 +14,28 @@ var view = {
     this.context.fillRect(blockXStart, blockYStart, 20, 20);
   },
 
-  drawBlocks: function(board) {
+  drawBlocks: function(board, block) {
     for ( var i = 0; i < board.length; i++ ) {
       for( var j = 0; j < board[i].length; j++ ) {
-        if ( board[i][j] ) {
+        if ( board[i][j] === 1 ) {
           this.drawBlock( i, j );
+        }
+      }
+    }
+
+    for ( var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        if( block.grid[i][j] === 1 ) {
+          var boardX = block.left + j;
+          var boardY = block.top + i;
+          this.drawBlock( boardY, boardX )
         }
       }
     }
   },
 
-  update: function(board) {
+  update: function(board, block) {
     this.context.clearRect(0, 0, model.boardWidth * 20, model.boardHeight * 20);
-    this.drawBlocks(board);
+    this.drawBlocks(board, block);
   },
 }

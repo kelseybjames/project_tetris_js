@@ -8,7 +8,13 @@ var model = {
   fallingBlock: undefined,
   blockFalling: false,
 
-  Block: function() {
+  init: function() {
+    for(var i=0; i < this.boardHeight; i++) {
+      this.board.push(Array(this.boardWidth));
+    };
+    this.board.push([1,1,1,1,1,1,1,1,1,1]);
+    this.generateBlock(0,3);
+    console.log('initializing');
   },
 
   currentLevel: function(column) {
@@ -22,56 +28,62 @@ var model = {
     return row;
   },
 
-  init: function() {
-    for(var i=0; i < this.boardHeight; i++) {
-      this.board.push(Array(this.boardWidth));
-    };
-    this.generateBlock(0,5);
-    console.log('initializing');
-  },
-
   update: function() {
-    if ( !model.blockFalling ) {
-      model.generateBlock(0,5);
-      console.log('new block');
-      model.blockFalling = true;
-    }
+    for(var i = 0; i < 4; i++) {
+      for(var j = 0; j < 4; j++) {
+        var boardX = this.currentBlock.left + j;
+        var boardY = this.currentBlock.top + i;
 
-    for(var i = 0; i < this.boardHeight; i++) {
-      for(var j = 0; j < this.boardWidth; j++) {
-        if (model.board[i][j]) {
-          block = model.board[i][j];
-          if (( i < this.currentLevel(j) - 1) && (!(model.board[i+1][j])))  {
-            this.fallingBlock = [i, j];
-          } else if (i === this.currentLevel(j) - 1) {
-            console.log('i have hit bottom at ' + this.currentLevel(j));
-            // console.log(model.currentBlock === model.board[i][j]);
-            
-              model.blockFalling = false;
-
-          }
+        if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY + 1][boardX] === 1 ) {
+          this.stopBlock();
+          return true;
         }
       }
-    };
-
-    while ( this.fallingBlock ) {
-      var coords = this.fallingBlock;
-      var i = coords[0];
-      var j = coords[1];
-
-      model.board[i+1][j] = model.board[i][j];
-      model.board[i][j] = undefined;
-      this.fallingBlock = undefined;
-    };
-
+    }
+    this.currentBlock.top++;
   },
 
-  generateBlock: function(x,y) {
-    var newBlock = new this.Block();
-    this.currentBlock = newBlock;
-    this.board[y][x] = newBlock;
-    this.blockFalling = true;
-    console.log('generating block');
-  }
+  stopBlock: function() {
+    for(var i = 0; i < 4; i++) {
+      for(var j = 0; j < 4; j++) {
+        var boardX = this.currentBlock.left + j;
+        var boardY = this.currentBlock.top + i;
+
+        if (this.currentBlock.grid[i][j] === 1) {
+          this.board[boardY][boardX] = 1;
+        }
+      }
+    }
+  },
+
+  generateBlock: function(y,x) {
+    this.currentBlock = new this.Block(x,y);
+  },
+
+  Block: function(x,y) {
+    this.grid = []
+    for (var i=0; i < 4; i++) {
+      this.grid[i] = [];
+      for ( var j=0; j<4; j++) {
+        this.grid[i][j] = 0;
+      }
+    }
+    this.grid[0][0] = 1;
+    this.top = y;
+    this.left = x;
+  },
 
 }
+//
+// if (model.board[i][j]) {
+//   block = model.board[i][j];
+//   if (( i < this.currentLevel(j) - 1) && (!(model.board[i+1][j])))  {
+//     this.fallingBlock = [i, j];
+//   } else if (i === this.currentLevel(j) - 1) {
+//     console.log('i have hit bottom at ' + this.currentLevel(j));
+//     // console.log(model.currentBlock === model.board[i][j]);
+//
+//       model.blockFalling = false;
+//
+//   }
+// }
