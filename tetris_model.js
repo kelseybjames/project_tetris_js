@@ -79,12 +79,21 @@ var model = {
       for(var j = 0; j < 4; j++) {
         var boardX = this.currentBlock.left + j;
         var boardY = this.currentBlock.top + i;
+        var validMove = true;
 
-        if ( this.currentBlock.grid[i][j] !== 1 || this.board[boardY][boardX - 1] !== 1 ) {
+        if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY][boardX - 1] === 1 ) {
+          validMove = false;
         };
       }
     }
-    this.currentBlock.left--;   
+
+    if (this.currentBlock.left === 0) {
+      validMove = false;
+    }
+
+    if (validMove) {
+      this.currentBlock.left--;
+    };
   },
 
   moveBlockRight: function() {
@@ -92,12 +101,21 @@ var model = {
       for(var j = 0; j < 4; j++) {
         var boardX = this.currentBlock.left + j;
         var boardY = this.currentBlock.top + i;
+        var validMove = true;
 
-        if ( this.currentBlock.grid[i][j] !== 1 || this.board[boardY][boardX + 1] !== 1 ) {
+        if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY][boardX + 1] === 1 ) {
+          validMove = false;
         };
       }
-    }
-    this.currentBlock.left++;
+    };
+
+    if (this.currentBlock.left === 7) {
+      validMove = false;
+    };
+
+    if (validMove) {
+      this.currentBlock.left++;
+    };
   }
 
 }
