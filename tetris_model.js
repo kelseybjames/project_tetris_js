@@ -1,4 +1,6 @@
 var model = {
+  // board has filled and empty spaces
+  // check if coordinates overlap filled space
   // blockList: [],
   boardHeight: 20,
   boardWidth: 10,
@@ -11,6 +13,9 @@ var model = {
 
   currentLevel: function(column) {
     row = this.boardHeight - 1;
+    console.log(this.board[row][column]);
+    console.log('Row: ' + row);
+    console.log('Column: ' + column);
     while (this.board[row][column]) {
       row--;
     }
@@ -18,15 +23,17 @@ var model = {
   },
 
   init: function() {
-    for(i=0; i < this.boardHeight; i++) {
+    for(var i=0; i < this.boardHeight; i++) {
       this.board.push(Array(this.boardWidth));
     };
     this.generateBlock(0,5);
+    console.log('initializing');
   },
 
   update: function() {
     if ( !model.blockFalling ) {
       model.generateBlock(0,5);
+      console.log('new block');
       model.blockFalling = true;
     }
 
@@ -37,12 +44,11 @@ var model = {
           if (( i < this.currentLevel(j) - 1) && (!(model.board[i+1][j])))  {
             this.fallingBlock = [i, j];
           } else if (i === this.currentLevel(j) - 1) {
-            // console.log('i have hit bottom at ' + this.currentLevel(j));
-            console.log(this.currentBlock);
-            console.log(this.board[i][j]);
-            if (model.board[i][j] === model.currentBlock) {
+            console.log('i have hit bottom at ' + this.currentLevel(j));
+            // console.log(model.currentBlock === model.board[i][j]);
+            
               model.blockFalling = false;
-            }
+
           }
         }
       }
@@ -52,7 +58,6 @@ var model = {
       var coords = this.fallingBlock;
       var i = coords[0];
       var j = coords[1];
-      console.log(model.board[i][j]);
 
       model.board[i+1][j] = model.board[i][j];
       model.board[i][j] = undefined;
@@ -65,6 +70,8 @@ var model = {
     var newBlock = new this.Block();
     this.currentBlock = newBlock;
     this.board[y][x] = newBlock;
+    this.blockFalling = true;
+    console.log('generating block');
   }
 
 }
