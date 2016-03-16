@@ -1,2 +1,1 @@
-# project_tetris_js
-block based gaming
+Play the game [here](https://rawgit.com/kelseybjames/project_tetris_js/master/index.html)

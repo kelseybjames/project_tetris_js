@@ -7,10 +7,10 @@ var controller = {
   },
 
   update: function() {
+    var rowsCleared = model.rowsCleared;
     if (this.gameOver) {
-      view.gameOver();
+      view.gameOver(rowsCleared);
     } else {
-      var rowsCleared = model.rowsCleared;
       model.update();
       view.update( model.board, model.currentBlock, rowsCleared );
     }

@@ -12,12 +12,12 @@ var model = {
 
   init: function() {
     var randomPieceType = this.blockTypes[Math.floor(Math.random() * this.blockTypes.length)];
-    var randomX = Math.floor(Math.random()*this.boardWidth);
+    var randomX = Math.floor(Math.random()*(this.boardWidth - 2));
     for(var i=0; i < this.boardHeight; i++) {
       this.board.push(Array(this.boardWidth));
     };
     this.board.push([1,1,1,1,1,1,1,1,1,1]);
-    this.generateBlock(randomPieceType,0,randomX - 1);
+    this.generateBlock(randomPieceType,0,randomX);
   },
 
   restart: function() {
@@ -56,8 +56,8 @@ var model = {
           if (this.gameOver) {
             controller.gameOver = true;
           } else {
-            var randomX = Math.floor(Math.random()*this.boardWidth);
-            this.generateBlock(randomPieceType,0, randomX - 1);
+            var randomX = Math.floor(Math.random()*(this.boardWidth - 2));
+            this.generateBlock(randomPieceType,0, randomX);
           };
           return true;
         }

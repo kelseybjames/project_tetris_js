@@ -59,8 +59,8 @@ var view = {
     this.context.clearRect(0, 0, model.boardWidth * 20, model.boardHeight * 20);
   },
 
-  gameOver: function() {
-    var restart = confirm('Whoops, game over! Want to play again?');
+  gameOver: function(rowsCleared) {
+    var restart = confirm('You cleared ' + rowsCleared + ' rows! Want to play again?');
     if (restart) {
       controller.restart();
     } else {
