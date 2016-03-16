@@ -7,6 +7,7 @@ var model = {
   board: [],
   fallingBlock: undefined,
   blockFalling: false,
+  gameOver: false,
 
   init: function() {
     var randomPieceType = this.blockTypes[Math.floor(Math.random() * this.blockTypes.length)];
@@ -15,6 +16,16 @@ var model = {
     };
     this.board.push([1,1,1,1,1,1,1,1,1,1]);
     this.generateBlock(randomPieceType,0,3);
+  },
+
+  restart: function() {
+     var randomPieceType = this.blockTypes[Math.floor(Math.random() * this.blockTypes.length)];
+    for(var i=0; i < this.boardHeight; i++) {
+      this.board[i] = Array(this.boardWidth);
+    };
+    this.gameOver = false;
+    this.fallingBlock = undefined;
+    this.blockFalling = false;
   },
 
   currentLevel: function(column) {
@@ -37,7 +48,13 @@ var model = {
         if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY + 1][boardX] === 1 ) {
           this.stopBlock();
           this.checkForFullRows();
-          this.generateBlock(randomPieceType,0, 3);
+          this.checkForGameOver();
+
+          if (this.gameOver) {
+            controller.gameOver = true;
+          } else {
+            this.generateBlock(randomPieceType,0, 3);
+          };
           return true;
         }
       }
@@ -109,6 +126,14 @@ var model = {
     this.currentBlock.top = lowestColumn - 4;
   },
 
+  rotateBlockRight: function() {
+
+  },
+
+  rotateBlockLeft: function() {
+
+  },
+
   arraysEqual: function(arr1, arr2) {
     if(arr1.length !== arr2.length) {
       return false;
@@ -132,6 +157,14 @@ var model = {
         };
       };
     });
+  },
+
+  checkForGameOver: function() {
+    for(var i=0; i<4; i++) {
+      if (!(model.arraysEqual(model.board[i], Array(model.boardWidth)))) {
+        model.gameOver = true;
+      }
+    }
   }
 
 }

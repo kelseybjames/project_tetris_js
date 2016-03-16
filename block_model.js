@@ -8,6 +8,7 @@ MODELS.Block = function(type, x, y) {
 
   this.top = y;
   this.left = x;
+  this.type = type;
 
 
 };
