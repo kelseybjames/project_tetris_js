@@ -61,6 +61,8 @@ var view = {
     var restart = confirm('Whoops, game over! Want to play again?');
     if (restart) {
       controller.restart();
+    } else {
+      controller.quit();
     };
   },
 
@@ -78,6 +80,14 @@ var view = {
         case 40:
           console.log('down');
           model.moveBlockDown();
+          break;
+        case 65:
+          console.log('A');
+          model.rotateBlockLeft();
+          break;
+        case 68:
+          console.log('D');
+          model.rotateBlockRight();
           break;
         default:
           console.log(event.which);

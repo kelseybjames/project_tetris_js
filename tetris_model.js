@@ -118,7 +118,7 @@ var model = {
 
   moveBlockDown: function() {
     var currentColumns = [];
-    for (i=0; i<4; i++) {
+    for (var i=0; i<4; i++) {
       var column = this.currentBlock.left + i;
       currentColumns.push(this.currentLevel(column));
     };
@@ -127,11 +127,29 @@ var model = {
   },
 
   rotateBlockRight: function() {
-
+    rotatedBlock = [[], [], [], []];
+    for(var y=0; y<4; y++) {
+      for(var x=0; x<4; x++) {
+        var value = model.currentBlock.grid[y][x];
+        var newX = 3 - y;
+        var newY = x;
+        rotatedBlock[newY][newX] = value;
+      }
+    };
+    this.currentBlock.grid = rotatedBlock;
   },
 
   rotateBlockLeft: function() {
-
+    rotatedBlock = [[], [], [], []];
+    for(var y=0; y<4; y++) {
+      for(var x=0; x<4; x++) {
+        var value = model.currentBlock.grid[y][x];
+        var newX = y;
+        var newY = 3 - x;
+        rotatedBlock[newY][newX] = value;
+      }
+    };
+    this.currentBlock.grid = rotatedBlock;
   },
 
   arraysEqual: function(arr1, arr2) {

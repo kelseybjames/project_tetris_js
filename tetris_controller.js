@@ -21,6 +21,10 @@ var controller = {
     this.update();
   },
 
+  quit: function() {
+    
+  },
+
   gameLoop: function() {
     setInterval( function() {
       controller.update();
