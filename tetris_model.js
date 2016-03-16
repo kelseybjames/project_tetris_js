@@ -36,6 +36,7 @@ var model = {
         var boardY = this.currentBlock.top + i;
         if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY + 1][boardX] === 1 ) {
           this.stopBlock();
+          this.checkForFullRows();
           this.generateBlock(randomPieceType,0, 3);
           return true;
         }
@@ -106,6 +107,31 @@ var model = {
     };
     var lowestColumn = Math.min.apply(null, currentColumns);
     this.currentBlock.top = lowestColumn - 4;
+  },
+
+  arraysEqual: function(arr1, arr2) {
+    if(arr1.length !== arr2.length) {
+      return false;
+    };
+
+    for(var i = arr1.length; i--;) {
+      if(arr1[i] !== arr2[i]) {
+        return false;
+      };
+    };
+    return true;
+  },
+
+  checkForFullRows: function() {
+    this.board.forEach(function(row, index) {
+      if (index !== 24) {
+        console.log(model.arraysEqual(row, [1,1,1,1,1,1,1,1,1,1]));
+        if (model.arraysEqual(row, [1,1,1,1,1,1,1,1,1,1])) {
+          model.board.splice(index, 1);
+          model.board.unshift(Array(model.boardWidth));
+        };
+      };
+    });
   }
 
 }
