@@ -32,12 +32,12 @@ var model = {
   },
 
   currentLevel: function(column) {
-    row = this.boardHeight - 1;
+    row = 0;
     console.log(this.board[row][column]);
     console.log('Row: ' + row);
     console.log('Column: ' + column);
-    while (this.board[row][column]) {
-      row--;
+    while (!(this.board[row][column])) {
+      row++;
     }
     return row;
   },
@@ -127,7 +127,7 @@ var model = {
       currentColumns.push(this.currentLevel(column));
     };
     var lowestColumn = Math.min.apply(null, currentColumns);
-    this.currentBlock.top = lowestColumn - 4;
+    this.currentBlock.top = (lowestColumn - 4);
   },
 
   rotateBlockRight: function() {
