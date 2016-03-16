@@ -38,6 +38,8 @@ var view = {
   update: function(board, block) {
     this.context.clearRect(0, 0, model.boardWidth * 20, model.boardHeight * 20);
     this.drawBlocks(board, block);
+    this.context.fillStyle = "#555";
+    this.context.fillRect( 0, 0, model.boardWidth * 20, 40 );
   },
 
   moveListener: function() {
