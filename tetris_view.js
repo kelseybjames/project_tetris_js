@@ -30,7 +30,7 @@ var view = {
     for ( var i = 0; i < board.length; i++ ) {
       for( var j = 0; j < board[i].length; j++ ) {
         if ( board[i][j] === 1 ) {
-          this.drawBlock( i, j, '#FFF000' );
+          this.drawBlock( i, j, '#A4B049' );
         }
       }
     }
@@ -46,11 +46,13 @@ var view = {
     }
   },
 
-  update: function(board, block) {
+  update: function(board, block, rowsCleared) {
     this.context.clearRect(0, 0, model.boardWidth * 20, model.boardHeight * 20);
     this.drawBlocks(board, block);
     this.context.fillStyle = "#555";
-    this.context.fillRect( 0, 0, model.boardWidth * 20, 40 );
+    this.context.fillRect( 0, 0, model.boardWidth * 20, 60 );
+
+    $('#score').text('Rows Cleared: ' + rowsCleared);
   },
 
   restart: function() {

@@ -8,14 +8,16 @@ var model = {
   fallingBlock: undefined,
   blockFalling: false,
   gameOver: false,
+  rowsCleared: 0,
 
   init: function() {
     var randomPieceType = this.blockTypes[Math.floor(Math.random() * this.blockTypes.length)];
+    var randomX = Math.floor(Math.random()*this.boardWidth);
     for(var i=0; i < this.boardHeight; i++) {
       this.board.push(Array(this.boardWidth));
     };
     this.board.push([1,1,1,1,1,1,1,1,1,1]);
-    this.generateBlock(randomPieceType,0,3);
+    this.generateBlock(randomPieceType,0,randomX - 1);
   },
 
   restart: function() {
@@ -26,6 +28,7 @@ var model = {
     this.gameOver = false;
     this.fallingBlock = undefined;
     this.blockFalling = false;
+    this.rowsCleared = 0;
   },
 
   currentLevel: function(column) {
@@ -53,7 +56,8 @@ var model = {
           if (this.gameOver) {
             controller.gameOver = true;
           } else {
-            this.generateBlock(randomPieceType,0, 3);
+            var randomX = Math.floor(Math.random()*this.boardWidth);
+            this.generateBlock(randomPieceType,0, randomX - 1);
           };
           return true;
         }
@@ -172,6 +176,7 @@ var model = {
         if (model.arraysEqual(row, [1,1,1,1,1,1,1,1,1,1])) {
           model.board.splice(index, 1);
           model.board.unshift(Array(model.boardWidth));
+          model.rowsCleared++;
         };
       };
     });

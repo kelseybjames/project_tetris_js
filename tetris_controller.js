@@ -1,5 +1,6 @@
 var controller = {
   gameOver: false,
+  gameSpeed: 200,
   init: function() {
     model.init();
     view.init();
@@ -9,8 +10,9 @@ var controller = {
     if (this.gameOver) {
       view.gameOver();
     } else {
+      var rowsCleared = model.rowsCleared;
       model.update();
-      view.update( model.board, model.currentBlock );
+      view.update( model.board, model.currentBlock, rowsCleared );
     }
   },
 
@@ -22,13 +24,13 @@ var controller = {
   },
 
   quit: function() {
-    
+
   },
 
   gameLoop: function() {
     setInterval( function() {
       controller.update();
-    }, 100);
+    }, this.gameSpeed);
   }
 }
 

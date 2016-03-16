@@ -1,3 +1,11 @@
 #tetris-canvas {
   border: 2px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+#score {
+  font-size: 24px;
+  text-align: center;
 }
