@@ -53,6 +53,10 @@ var view = {
           console.log('right');
           model.moveBlockRight();
           break;
+        case 40:
+          console.log('down');
+          model.moveBlockDown();
+          break;
         default:
           console.log(event.which);
           break;

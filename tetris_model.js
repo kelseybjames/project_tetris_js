@@ -1,9 +1,7 @@
 var MODELS = MODELS || {};
 
 var model = {
-  // board has filled and empty spaces
-  // check if coordinates overlap filled space
-  // blockList: [],
+  blockTypes: ['square', 'line', 'rightL', 'leftL', 'leftS', 'rightS', 'tPiece'],
   boardHeight: 24,
   boardWidth: 10,
   board: [],
@@ -11,11 +9,12 @@ var model = {
   blockFalling: false,
 
   init: function() {
+    var randomPieceType = this.blockTypes[Math.floor(Math.random() * this.blockTypes.length)];
     for(var i=0; i < this.boardHeight; i++) {
       this.board.push(Array(this.boardWidth));
     };
     this.board.push([1,1,1,1,1,1,1,1,1,1]);
-    this.generateBlock("leftL",0,3);
+    this.generateBlock(randomPieceType,0,3);
   },
 
   currentLevel: function(column) {
@@ -30,14 +29,14 @@ var model = {
   },
 
   update: function() {
+    var randomPieceType = this.blockTypes[Math.floor(Math.random() * this.blockTypes.length)];
     for(var i = 0; i < 4; i++) {
       for(var j = 0; j < 4; j++) {
         var boardX = this.currentBlock.left + j;
         var boardY = this.currentBlock.top + i;
-        console.log(this.currentBlock.grid)
         if ( this.currentBlock.grid[i][j] === 1 && this.board[boardY + 1][boardX] === 1 ) {
           this.stopBlock();
-          this.generateBlock("square",0, 3);
+          this.generateBlock(randomPieceType,0, 3);
           return true;
         }
       }
@@ -97,6 +96,16 @@ var model = {
     if (validMove) {
       this.currentBlock.left++;
     };
+  },
+
+  moveBlockDown: function() {
+    var currentColumns = [];
+    for (i=0; i<4; i++) {
+      var column = this.currentBlock.left + i;
+      currentColumns.push(this.currentLevel(column));
+    };
+    var lowestColumn = Math.min.apply(null, currentColumns);
+    this.currentBlock.top = lowestColumn - 4;
   }
 
 }
