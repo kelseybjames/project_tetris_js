@@ -1,7 +1,7 @@
 Tetris in Javascript
 ====================
 
-This was a one day project where I had to build a Tetris game in Javascript. Tetrominoes fall from the top of the screen in random columns, and the player's task is to arrange them so that they form complete rows.
+This was a brief project where I had to build a Tetris game in Javascript. Tetrominoes fall from the top of the screen in random columns, and the player's task is to arrange them so that they form complete rows.
 
 Instructions
 ------------
