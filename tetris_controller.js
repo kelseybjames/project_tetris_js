@@ -24,17 +24,17 @@ var controller = {
   },
 
   quit: function() {
-
+    console.log('quitting');
+    clearInterval(controller.gameIntervalID);
   },
 
-  gameLoop: function() {
-    setInterval( function() {
+  gameIntervalID: window.setInterval( function() {
       controller.update();
-    }, this.gameSpeed);
-  }
+    }, 100),
+
 }
 
 $( document ).ready( function() {
   controller.init();
-  controller.gameLoop();
+  controller.gameIntervalID;
 });
